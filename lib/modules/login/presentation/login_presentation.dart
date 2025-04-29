@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gs3_app/modules/login/data/constants.dart';
+import 'package:gs3_app/modules/login/presentation/components/login_button.dart';
+import 'package:gs3_app/modules/login/presentation/components/login_form.dart';
 
-import '../../../design_system/components/typography.dart';
 import 'components/login_bottom_card.dart';
 
 class LoginPresentation extends StatelessWidget {
@@ -25,27 +26,16 @@ class LoginPresentation extends StatelessWidget {
           children: [
             const SizedBox.shrink(),
             SvgPicture.asset('assets/images/gs3_logo.svg'),
-            Column(
-              children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    border: Border.all(
-                      color: Colors.white,
-                    ),
-                  ),
-                  child: const Icon(Icons.add, color: Colors.white),
-                ),
-                const SizedBox(height: 8),
-                const AppTypography(
-                  title: 'Entrar',
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ],
+            LoginButton(
+              onTap: () => showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: const LoginForm(),
+                  );
+                },
+              ),
             ),
             const SizedBox(height: 50),
             Container(

@@ -27,7 +27,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'GS3 Wallet',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
       home: const LoginPresentation(),
