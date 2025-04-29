@@ -1,10 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gs3_app/modules/login/data/constants.dart';
+
+import 'components/login_bottom_card.dart';
 
 class LoginPresentation extends StatelessWidget {
   const LoginPresentation({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: const BoxDecoration(
+          color: Colors.black,
+          image: DecorationImage(
+            image: AssetImage('assets/images/login_bg.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            const SizedBox.shrink(),
+            SvgPicture.asset('assets/images/gs3_logo.svg'),
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                border: Border.all(
+                  color: Colors.white,
+                ),
+              ),
+              child: const Icon(Icons.add, color: Colors.white),
+            ),
+            const SizedBox(height: 50),
+            Container(
+              padding: const EdgeInsets.only(left: 24),
+              height: 100,
+              child: ListView.builder(
+                itemCount: LoginConstants.bottomCards.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, int index) {
+                  final card = LoginConstants.bottomCards[index];
+
+                  return Container(
+                    margin: const EdgeInsets.only(right: 16),
+                    child: LoginBottomCard(
+                      title: card['title'],
+                      icon: card['icon'],
+                      onTap: () => print('Click on card: ${index + 1}'),
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
