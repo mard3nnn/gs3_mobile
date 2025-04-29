@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gs3_app/design_system/components/typography.dart';
 
 class LoginBottomCard extends StatelessWidget {
   const LoginBottomCard({
@@ -26,12 +27,14 @@ class LoginBottomCard extends StatelessWidget {
           horizontal: 32,
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, color: Colors.white),
-            Text(
-              title,
+            AppTypography(
+              title: title,
               textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.white),
+              color: Colors.white,
+              fontSize: 12,
             ),
           ],
         ),
