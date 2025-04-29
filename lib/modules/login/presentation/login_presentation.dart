@@ -4,6 +4,7 @@ import 'package:gs3_app/modules/login/data/constants.dart';
 import 'package:gs3_app/modules/login/presentation/components/login_button.dart';
 import 'package:gs3_app/modules/login/presentation/components/login_form.dart';
 
+import '../../../core/utils/app_responsivity.dart';
 import 'components/login_bottom_card.dart';
 
 class LoginPresentation extends StatelessWidget {
@@ -31,6 +32,7 @@ class LoginPresentation extends StatelessWidget {
                 context: context,
                 builder: (BuildContext context) {
                   return SizedBox(
+                    height: context.responsivePct(.83),
                     width: MediaQuery.of(context).size.width,
                     child: const LoginForm(),
                   );
