@@ -5,6 +5,7 @@ import 'package:gs3_app/modules/home/presentation/components/home_top_bar.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../data/constants/home_favorites_constants.dart';
+import 'components/history/tile_history.dart';
 import 'components/home_favorites_card.dart';
 
 class HomePresentation extends StatelessWidget {
@@ -19,7 +20,7 @@ class HomePresentation extends StatelessWidget {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color.fromRGBO(209, 220, 237, 1),
+              Colors.white,
               Color.fromRGBO(65, 110, 180, 1),
             ],
             stops: [.3, .7],
@@ -105,7 +106,39 @@ class HomePresentation extends StatelessWidget {
                     },
                   ),
                 ),
-              )
+              ),
+              const SizedBox(height: 8),
+              Container(
+                color: const Color.fromRGBO(229, 229, 229, 1).withOpacity(.4),
+                height: 1,
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AppTypography(
+                      title: 'Últimos lançamentos',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                    Row(
+                      children: [
+                        AppTypography(title: 'Ver todos', fontSize: 8),
+                        Icon(
+                          LucideIcons.chevronRight,
+                          color: Color.fromRGBO(40, 144, 207, 1),
+                          size: 16,
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(height: 8),
+              TileHistory(),
             ],
           ),
         ),
