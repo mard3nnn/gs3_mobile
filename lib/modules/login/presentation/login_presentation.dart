@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gs3_app/main.dart';
 import 'package:gs3_app/modules/login/data/constants.dart';
 import 'package:gs3_app/modules/login/presentation/components/login_button.dart';
 import 'package:gs3_app/modules/login/presentation/components/login_form.dart';
 
 import '../../../core/utils/app_responsivity.dart';
+import '../../home/routes/home_routes.dart';
 import 'components/login_bottom_card.dart';
 
 class LoginPresentation extends StatelessWidget {
@@ -30,9 +32,10 @@ class LoginPresentation extends StatelessWidget {
             LoginButton(
               onTap: () => showModalBottomSheet(
                 context: context,
+                isScrollControlled: true,
                 builder: (BuildContext context) {
                   return SizedBox(
-                    height: context.responsivePct(.83),
+                    height: context.responsivePct(1),
                     width: MediaQuery.of(context).size.width,
                     child: const LoginForm(),
                   );
@@ -54,7 +57,11 @@ class LoginPresentation extends StatelessWidget {
                     child: LoginBottomCard(
                       title: card['title'],
                       icon: card['icon'],
-                      onTap: () => print('Click on card: ${index + 1}'),
+                      onTap: () => router.navigateTo(
+                        context,
+                        HomeRoutesPath.home.path,
+                        clearStack: true,
+                      ),
                     ),
                   );
                 },

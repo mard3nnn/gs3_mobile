@@ -10,12 +10,14 @@ class LoginViewModel extends BaseViewModel {
 
   bool get isEnabled => _enabled.value;
 
-  Future<void> makeLogin({
+  Future<bool> makeLogin({
     required String cpf,
     required String password,
   }) async {
     setLoading(true);
     await Future.delayed(const Duration(seconds: 3));
     setLoading(false);
+
+    return true;
   }
 }

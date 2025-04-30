@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gs3_app/main.dart';
+import 'package:gs3_app/modules/home/routes/home_routes.dart';
 
 import '../../../../design_system/ds.dart';
 import '../../vm/login_viewmodel.dart';
@@ -119,7 +120,18 @@ class _LoginFormState extends State<LoginForm> {
                             final String cpf = cpfController.text;
                             final String password = passwordController.text;
 
-                            await vm.makeLogin(cpf: cpf, password: password);
+                            final bool canAccess = await vm.makeLogin(
+                              cpf: cpf,
+                              password: password,
+                            );
+
+                            if (canAccess) {
+                              router.navigateTo(
+                                context,
+                                HomeRoutesPath.home.path,
+                                clearStack: true,
+                              );
+                            }
                           }
                         },
                       );
