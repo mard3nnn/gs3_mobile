@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gs3_app/main.dart';
 import 'package:gs3_app/modules/login/data/constants.dart';
+import 'package:gs3_app/modules/login/data/remote/service/login_service.dart';
 import 'package:gs3_app/modules/login/presentation/components/login_button.dart';
-import 'package:gs3_app/modules/login/presentation/components/login_form.dart';
 
-import '../../../core/utils/app_responsivity.dart';
 import '../../home/routes/home_routes.dart';
+import '../data/models/remote/login_service.dart';
 import 'components/login_bottom_card.dart';
 
 class LoginPresentation extends StatelessWidget {
@@ -30,17 +30,25 @@ class LoginPresentation extends StatelessWidget {
             const SizedBox.shrink(),
             SvgPicture.asset('assets/images/gs3_logo.svg'),
             LoginButton(
-              onTap: () => showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                builder: (BuildContext context) {
-                  return SizedBox(
-                    height: context.responsivePct(1),
-                    width: MediaQuery.of(context).size.width,
-                    child: const LoginForm(),
-                  );
-                },
-              ),
+              onTap: () async {
+                final LoginService service = LoginServiceImpl();
+
+                await service.login(
+                  email: 'test@example.com',
+                  password: 'password',
+                );
+              },
+              // onTap: () => showModalBottomSheet(
+              //   context: context,
+              //   isScrollControlled: true,
+              //   builder: (BuildContext context) {
+              //     return SizedBox(
+              //       height: context.responsivePct(1),
+              //       width: MediaQuery.of(context).size.width,
+              //       child: const LoginForm(),
+              //     );
+              //   },
+              // ),
             ),
             const SizedBox(height: 50),
             Container(
