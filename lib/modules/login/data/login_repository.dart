@@ -4,9 +4,17 @@ import '../../../core/http/response/app_response.dart';
 import 'models/remote/login_service.dart';
 import 'models/remote/mapper/auth_response.dart';
 
-class LoginRepositoryImpl {
+abstract class LoginRepository {
+  Future<AppResponse<AuthResponse>?> login({
+    required String email,
+    required String password,
+  });
+}
+
+class LoginRepositoryImpl implements LoginRepository {
   final LoginService _service = inject<LoginService>();
 
+  @override
   Future<AppResponse<AuthResponse>?> login({
     required String email,
     required String password,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gs3_app/core/http/models/user_auth_data.dart';
+import 'package:gs3_app/core/utils/toast_notification.dart';
 import 'package:gs3_app/main.dart';
 import 'package:gs3_app/modules/home/routes/home_routes.dart';
 
@@ -16,7 +18,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final LoginViewModel vm = inject<LoginViewModel>();
 
-  final TextEditingController cpfController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -25,7 +27,7 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   void initState() {
-    cpfController.addListener(() {
+    emailController.addListener(() {
       if (_formKey.currentState!.validate()) {
         vm.setEnabled(true);
       } else {
@@ -64,7 +66,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
             AppInput(
               hintText: 'CPF',
-              controller: cpfController,
+              controller: emailController,
               validator: (dynamic value) {
                 value = value as String?;
 
@@ -117,19 +119,34 @@ class _LoginFormState extends State<LoginForm> {
                               _formKey.currentState!.validate();
 
                           if (isValid) {
-                            final String cpf = cpfController.text;
+                            final String email = emailController.text;
                             final String password = passwordController.text;
 
                             final bool canAccess = await vm.makeLogin(
-                              cpf: cpf,
+                              email: email,
                               password: password,
                             );
 
                             if (canAccess) {
+                              final String userName =
+                                  inject<UserAuthData>().user.name;
+
+                              ToastNotification.success(
+                                context: context,
+                                title: 'Bem vindo, $userName!',
+                              );
+
                               router.navigateTo(
                                 context,
                                 HomeRoutesPath.home.path,
                                 clearStack: true,
+                              );
+                            } else {
+                              ToastNotification.error(
+                                context: context,
+                                title: 'Oops...',
+                                description:
+                                    'Houve um problema ao realiza o login, verifique as credenciais.',
                               );
                             }
                           }
