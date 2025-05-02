@@ -29,16 +29,22 @@ class AuthResponse {
 class AuthData {
   final String accessToken;
   final User user;
+  final List<String> permissions;
+  final List<String> roles;
 
   AuthData({
     required this.accessToken,
     required this.user,
+    required this.permissions,
+    required this.roles,
   });
 
   factory AuthData.fromJson(Map<String, dynamic> json) {
     return AuthData(
       accessToken: json['access_token'],
       user: User.fromJson(json['user']),
+      permissions: List<String>.from(json['permissions'] ?? []),
+      roles: List<String>.from(json['roles'] ?? []),
     );
   }
 
@@ -46,6 +52,8 @@ class AuthData {
     return {
       'access_token': accessToken,
       'user': user.toJson(),
+      'permissions': permissions,
+      'roles': roles,
     };
   }
 }

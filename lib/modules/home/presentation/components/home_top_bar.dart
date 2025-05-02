@@ -6,7 +6,9 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../../design_system/ds.dart';
 
 class HomeTopBar extends StatelessWidget {
-  const HomeTopBar({super.key});
+  const HomeTopBar({super.key, this.backIcon});
+
+  final Widget? backIcon;
 
   UserAuthData get user => inject<UserAuthData>();
 
@@ -17,10 +19,11 @@ class HomeTopBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Icon(
-            LucideIcons.menu,
-            color: Colors.white,
-          ),
+          backIcon ??
+              const Icon(
+                LucideIcons.menu,
+                color: Colors.white,
+              ),
           AppTypography(
             title: 'Olá, ${user.user.name}',
             color: Colors.white,

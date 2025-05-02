@@ -13,6 +13,7 @@ import 'components/history/tile_history.dart';
 import 'components/home_favorites_card.dart';
 import 'components/shimmer/home_card_shimmer.dart';
 import 'components/shimmer/tile_history_shimmer.dart';
+import 'home_favorites_presentation.dart';
 
 class HomePresentation extends StatefulWidget {
   const HomePresentation({super.key});
@@ -50,8 +51,7 @@ class _HomePresentationState extends State<HomePresentation> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 10),
-              const SizedBox(height: 60),
+              const SizedBox(height: 70),
               const HomeTopBar(),
               Container(
                 color: Colors.grey.shade400,
@@ -157,6 +157,14 @@ class _HomePresentationState extends State<HomePresentation> {
                         child: HomeFavoritesCard(
                           icon: favorite['icon'],
                           title: favorite['title'],
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomeFavoritesPresentation(
+                                menu: favorite['title'],
+                              ),
+                            ),
+                          ),
                         ),
                       );
                     },

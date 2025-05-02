@@ -4,8 +4,11 @@ class UserAuthData {
   UserAuthData({
     required this.token,
     required this.user,
+    required this.permissions,
   });
 
   final String token;
   final User user;
+
+  final List<String> permissions;
 }

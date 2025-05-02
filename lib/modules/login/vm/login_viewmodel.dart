@@ -34,6 +34,7 @@ class LoginViewModel extends BaseViewModel {
         data: UserAuthData(
           token: result.response!.data.accessToken,
           user: result.response!.data.user,
+          permissions: result.response!.data.permissions,
         ),
       );
     }
