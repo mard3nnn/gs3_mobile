@@ -11,6 +11,8 @@ import '../data/mapper/remote/card_list_response.dart';
 import '../data/mapper/remote/transaction_list_response.dart';
 import 'components/history/tile_history.dart';
 import 'components/home_favorites_card.dart';
+import 'components/shimmer/home_card_shimmer.dart';
+import 'components/shimmer/tile_history_shimmer.dart';
 
 class HomePresentation extends StatefulWidget {
   const HomePresentation({super.key});
@@ -65,8 +67,21 @@ class _HomePresentationState extends State<HomePresentation> {
                 ) {
                   final List<CardData>? cards = snapshot.data;
 
-                  if (snapshot.data == null || !snapshot.hasData) {
-                    return const CircularProgressIndicator();
+                  if (snapshot.data == null) {
+                    return SizedBox(
+                      height: 160,
+                      width: MediaQuery.of(context).size.width,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 8,
+                        itemBuilder: (
+                          BuildContext context,
+                          int index,
+                        ) {
+                          return const HomeCardShimmer();
+                        },
+                      ),
+                    );
                   }
 
                   return SizedBox(
@@ -181,19 +196,29 @@ class _HomePresentationState extends State<HomePresentation> {
               const SizedBox(height: 8),
               StreamBuilder<List<TransactionData>>(
                 stream: vm.transactions,
-                initialData: const [],
                 builder: (context, snapshot) {
-                  if (snapshot.data!.isEmpty) {
-                    return const Text('Nenhuma transação ainda...');
+                  if (!snapshot.hasData) {
+                    return Column(
+                      children: List.generate(
+                        6,
+                        (int index) => const TileHistoryShimmer(),
+                      ),
+                    );
                   }
 
                   final List<TransactionData> transactions = snapshot.data!;
 
+                  if (transactions.isEmpty) {
+                    return const AppTypography(
+                      title: 'Nenhum histórico para este cartão.',
+                    );
+                  }
+
+                  // Condição 3: lista com dados
                   final List<Widget> tiles = transactions
                       .map(
-                        (TransactionData transaction) => TileHistory(
-                          transactionData: transaction,
-                        ),
+                        (transaction) =>
+                            TileHistory(transactionData: transaction),
                       )
                       .toList();
 

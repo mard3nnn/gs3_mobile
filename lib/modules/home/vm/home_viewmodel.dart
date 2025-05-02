@@ -11,14 +11,14 @@ class HomeViewmodel extends BaseViewModel {
   final HomeRepository _repository = inject<HomeRepository>();
 
   final BehaviorSubject<List<CardData>> _listCards =
-      BehaviorSubject<List<CardData>>.seeded([]);
+      BehaviorSubject<List<CardData>>();
 
   Stream<List<CardData>> get listCards => _listCards.stream;
 
   void setListCards(List<CardData> value) => _listCards.add(value);
 
   final BehaviorSubject<List<TransactionData>> _cardTransactions =
-      BehaviorSubject<List<TransactionData>>.seeded([]);
+      BehaviorSubject<List<TransactionData>>();
 
   Stream<List<TransactionData>> get transactions => _cardTransactions.stream;
 
@@ -30,7 +30,9 @@ class HomeViewmodel extends BaseViewModel {
     final AppResponse<CardListResponse?> data = await _repository.myCards();
 
     if (data.success) {
-      setListCards(data.response!.data);
+      final List<CardData> cards = data.response!.data;
+      await cardHistory(cardId: cards.first.id.toString());
+      setListCards(cards);
     }
 
     setLoading(false);
