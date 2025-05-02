@@ -10,6 +10,7 @@ class HomeCard extends StatelessWidget {
     this.name,
     this.bankLimit,
     this.bestDayToBuy,
+    this.onPressed,
     this.changeBackground = false,
   });
 
@@ -19,112 +20,116 @@ class HomeCard extends StatelessWidget {
   final String? bankLimit;
   final int? bestDayToBuy;
   final bool changeBackground;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 150,
-      width: 300,
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: !changeBackground
-          ? _decoration()
-          : BoxDecoration(
-              color: const Color.fromRGBO(0, 81, 83, 1),
-              borderRadius: BorderRadius.circular(16),
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        height: 150,
+        width: 300,
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        decoration: !changeBackground
+            ? _decoration()
+            : BoxDecoration(
+                color: const Color.fromRGBO(0, 81, 83, 1),
+                borderRadius: BorderRadius.circular(16),
+              ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 16, left: 16),
+                    color: const Color.fromRGBO(217, 217, 217, 1),
+                    width: 80,
+                    height: 60,
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 10),
+                        AppTypography(
+                          title: '∙∙∙∙ ∙∙∙∙ ${_renderFinalNumber()}',
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                        AppTypography(
+                          title: name ?? '∙∙∙∙',
+                          color: Colors.white.withOpacity(.5),
+                          fontSize: 14,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const Icon(
+                  LucideIcons.eye,
+                  color: Color.fromRGBO(8, 158, 227, 1),
+                ),
+                const SizedBox(width: 16)
+              ],
             ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.only(top: 16, left: 16),
-                  color: const Color.fromRGBO(217, 217, 217, 1),
-                  width: 80,
-                  height: 60,
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Container(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 10),
-                      AppTypography(
-                        title: '∙∙∙∙ ∙∙∙∙ ${_renderFinalNumber()}',
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                      AppTypography(
-                        title: name ?? '∙∙∙∙',
-                        color: Colors.white.withOpacity(.5),
-                        fontSize: 14,
-                      ),
-                    ],
+            Container(
+              margin: const EdgeInsets.only(top: 16, bottom: 8),
+              color: const Color.fromRGBO(54, 96, 161, 1),
+              height: 2,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const AppTypography(
+                          title: 'Limite disponível',
+                          fontSize: 8,
+                          color: Colors.white,
+                        ),
+                        AppTypography(
+                          title: '${bankLimit?.toString() ?? 0}',
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const Icon(
-                LucideIcons.eye,
-                color: Color.fromRGBO(8, 158, 227, 1),
-              ),
-              const SizedBox(width: 16)
-            ],
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 16, bottom: 8),
-            color: const Color.fromRGBO(54, 96, 161, 1),
-            height: 2,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const AppTypography(
-                        title: 'Limite disponível',
-                        fontSize: 8,
-                        color: Colors.white,
-                      ),
-                      AppTypography(
-                        title: '${bankLimit?.toString() ?? 0}',
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      )
-                    ],
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        const AppTypography(
+                          title: 'Melhor dia de compra',
+                          fontSize: 8,
+                          color: Colors.white,
+                        ),
+                        AppTypography(
+                          title: bestDayToBuy?.toString() ?? '∙∙∙∙',
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const AppTypography(
-                        title: 'Melhor dia de compra',
-                        fontSize: 8,
-                        color: Colors.white,
-                      ),
-                      AppTypography(
-                        title: bestDayToBuy?.toString() ?? '∙∙∙∙',
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

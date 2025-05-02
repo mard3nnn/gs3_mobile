@@ -35,6 +35,7 @@ class HttpClientImpl implements HttpClient {
         if (inject.isRegistered<UserAuthData>()) {
           options.headers['Authorization'] = inject<UserAuthData>().token;
         }
+        options.headers['Accept'] = 'application/json';
 
         handler?.next(options);
       }, onResponse: (

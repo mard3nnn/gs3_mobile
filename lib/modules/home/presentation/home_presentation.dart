@@ -22,6 +22,12 @@ class _HomePresentationState extends State<HomePresentation> {
   final HomeViewmodel vm = inject<HomeViewmodel>();
 
   @override
+  void initState() {
+    vm.myCards();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -41,13 +47,7 @@ class _HomePresentationState extends State<HomePresentation> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 100),
-              ElevatedButton(
-                child: Text('Clique'),
-                onPressed: () async {
-                  await vm.myCards();
-                },
-              ),
+              const SizedBox(height: 10),
               const SizedBox(height: 60),
               const HomeTopBar(),
               Container(
@@ -65,7 +65,7 @@ class _HomePresentationState extends State<HomePresentation> {
                   final List<CardData>? cards = snapshot.data;
 
                   if (snapshot.data == null || !snapshot.hasData) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }
 
                   return SizedBox(
@@ -76,12 +76,16 @@ class _HomePresentationState extends State<HomePresentation> {
                       itemCount: cards!.length,
                       itemBuilder: (BuildContext context, int index) {
                         final CardData card = cards[index];
+
                         return HomeCard(
                           changeBackground: !(index % 2 == 0),
                           name: card.cardName,
                           bankLimit: card.limit,
                           bestDayToBuy: card.bestPurchaseDay,
                           finalNumber: card.number,
+                          onPressed: () async => vm.cardHistory(
+                            cardId: card.id.toString(),
+                          ),
                         );
                       },
                     ),
@@ -174,7 +178,7 @@ class _HomePresentationState extends State<HomePresentation> {
                 ),
               ),
               const SizedBox(height: 8),
-              TileHistory(),
+              const TileHistory(),
             ],
           ),
         ),

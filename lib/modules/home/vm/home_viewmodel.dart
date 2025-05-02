@@ -5,6 +5,7 @@ import 'package:gs3_app/modules/home/data/home_repository.dart';
 import 'package:rxdart/subjects.dart';
 
 import '../data/mapper/remote/card_list_response.dart';
+import '../data/mapper/remote/transaction_list_response.dart';
 
 class HomeViewmodel extends BaseViewModel {
   final HomeRepository _repository = inject<HomeRepository>();
@@ -16,9 +17,16 @@ class HomeViewmodel extends BaseViewModel {
 
   void setListCards(List<CardData> value) => _listCards.add(value);
 
+  final BehaviorSubject<List<TransactionData>> _cardTransactions =
+      BehaviorSubject<List<TransactionData>>.seeded([]);
+
+  Stream<List<TransactionData>> get transactions => _cardTransactions.stream;
+
+  void setCardTransactions(List<TransactionData> value) =>
+      _cardTransactions.add(value);
+
   Future<void> myCards() async {
     setLoading(true);
-    setListCards([]);
     final AppResponse<CardListResponse?> data = await _repository.myCards();
 
     if (data.success) {
@@ -26,5 +34,14 @@ class HomeViewmodel extends BaseViewModel {
     }
 
     setLoading(false);
+  }
+
+  Future<void> cardHistory({required String cardId}) async {
+    final AppResponse<List<TransactionData>>? data =
+        await _repository.cardHistory(cardId: cardId);
+
+    if (data!.success) {
+      setCardTransactions(data.response!);
+    }
   }
 }

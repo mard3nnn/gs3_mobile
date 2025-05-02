@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:gs3_app/core/http/client.dart';
 import 'package:gs3_app/core/http/response/app_response.dart';
 import 'package:gs3_app/main.dart';
+import 'package:gs3_app/modules/home/data/mapper/remote/transaction_list_response.dart';
 
 import '../../mapper/remote/card_list_response.dart';
 import '../../models/remote/home_service.dart';
@@ -21,8 +22,24 @@ class HomeServiceImpl implements HomeService {
         response: CardListResponse.fromJson(response.data!),
       );
     } catch (e) {
-      print(e);
       throw Exception('Houve um problema ao buscar os cartões!');
+    }
+  }
+
+  Future<AppResponse<TransactionListResponse>?> cardHistory({
+    required String cardId,
+  }) async {
+    try {
+      final Response<Map<String, dynamic>> response = await _client.get(
+        '/credit-cards/transactions/$cardId',
+      );
+
+      return AppResponse(
+        success: true,
+        response: TransactionListResponse.fromJson(response.data!),
+      );
+    } catch (e) {
+      throw Exception('Houve um problema ao buscar o histórico!');
     }
   }
 }
