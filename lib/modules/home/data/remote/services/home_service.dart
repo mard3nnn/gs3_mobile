@@ -21,6 +21,7 @@ class HomeServiceImpl implements HomeService {
         response: CardListResponse.fromJson(response.data!),
       );
     } catch (e) {
+      print(e);
       throw Exception('Houve um problema ao buscar os cartões!');
     }
   }

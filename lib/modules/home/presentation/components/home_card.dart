@@ -16,7 +16,7 @@ class HomeCard extends StatelessWidget {
   final String? finalNumber;
   final String? name;
 
-  final double? bankLimit;
+  final String? bankLimit;
   final int? bestDayToBuy;
   final bool changeBackground;
 
@@ -53,7 +53,7 @@ class HomeCard extends StatelessWidget {
                     children: [
                       const SizedBox(height: 10),
                       AppTypography(
-                        title: '∙∙∙∙ ${finalNumber ?? '∙∙∙∙'}',
+                        title: '∙∙∙∙ ∙∙∙∙ ${_renderFinalNumber()}',
                         color: Colors.white,
                         fontSize: 16,
                       ),
@@ -92,7 +92,7 @@ class HomeCard extends StatelessWidget {
                         color: Colors.white,
                       ),
                       AppTypography(
-                        title: 'R\$ ${bankLimit?.toString() ?? 0}',
+                        title: '${bankLimit?.toString() ?? 0}',
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -138,4 +138,8 @@ class HomeCard extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(16),
       );
+
+  String _renderFinalNumber() => finalNumber != null
+      ? finalNumber!.substring(finalNumber!.length - 4)
+      : '';
 }

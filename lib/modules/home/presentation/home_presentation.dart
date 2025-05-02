@@ -7,6 +7,7 @@ import 'package:gs3_app/modules/home/vm/home_viewmodel.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../data/constants/home_favorites_constants.dart';
+import '../data/mapper/remote/card_list_response.dart';
 import 'components/history/tile_history.dart';
 import 'components/home_favorites_card.dart';
 
@@ -55,18 +56,37 @@ class _HomePresentationState extends State<HomePresentation> {
                 height: 1,
               ),
               const SizedBox(height: 15),
-              SizedBox(
-                height: 160,
-                width: MediaQuery.of(context).size.width,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) {
-                    return HomeCard(
-                      changeBackground: !(index % 2 == 0),
-                    );
-                  },
-                ),
+              StreamBuilder<List<CardData>>(
+                stream: vm.listCards,
+                builder: (
+                  BuildContext context,
+                  AsyncSnapshot<List<CardData>?> snapshot,
+                ) {
+                  final List<CardData>? cards = snapshot.data;
+
+                  if (snapshot.data == null || !snapshot.hasData) {
+                    return CircularProgressIndicator();
+                  }
+
+                  return SizedBox(
+                    height: 160,
+                    width: MediaQuery.of(context).size.width,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: cards!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final CardData card = cards[index];
+                        return HomeCard(
+                          changeBackground: !(index % 2 == 0),
+                          name: card.cardName,
+                          bankLimit: card.limit,
+                          bestDayToBuy: card.bestPurchaseDay,
+                          finalNumber: card.number,
+                        );
+                      },
+                    ),
+                  );
+                },
               ),
               Container(
                 height: 1,

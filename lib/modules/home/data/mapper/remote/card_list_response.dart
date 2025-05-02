@@ -32,7 +32,7 @@ class CardData {
   final String number;
   final String cardName;
   final int bestPurchaseDay;
-  final int limit;
+  final String limit;
   final String createdAt;
   final String updatedAt;
 
@@ -54,7 +54,7 @@ class CardData {
       number: json['number'],
       cardName: json['card_name'],
       bestPurchaseDay: json['best_purchase_day'],
-      limit: json['limit'],
+      limit: json['formatted_limit'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
     );
