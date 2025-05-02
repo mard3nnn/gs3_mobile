@@ -12,7 +12,7 @@ class AuthResponse {
   factory AuthResponse.fromJson(Map<String, dynamic> json) {
     return AuthResponse(
       success: json['success'],
-      message: json['message'],
+      message: json['message'] ?? '',
       data: AuthData.fromJson(json['data']),
     );
   }

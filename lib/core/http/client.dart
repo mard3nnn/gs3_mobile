@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:gs3_app/main.dart';
 
 import '../constants/url.dart';
+import 'models/user_auth_data.dart';
 
 abstract interface class HttpClient {
   Future<Response<T>> get<T>(
@@ -29,6 +31,10 @@ class HttpClientImpl implements HttpClient {
         RequestInterceptorHandler? handler,
       ) async {
         options.baseUrl = UrlConstants.baseUrl;
+
+        if (inject.isRegistered<UserAuthData>()) {
+          options.headers['Authorization'] = inject<UserAuthData>().token;
+        }
 
         handler?.next(options);
       }, onResponse: (

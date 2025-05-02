@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:gs3_app/design_system/components/components.dart';
+import 'package:gs3_app/main.dart';
 import 'package:gs3_app/modules/home/presentation/components/home_card.dart';
 import 'package:gs3_app/modules/home/presentation/components/home_top_bar.dart';
+import 'package:gs3_app/modules/home/vm/home_viewmodel.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../data/constants/home_favorites_constants.dart';
 import 'components/history/tile_history.dart';
 import 'components/home_favorites_card.dart';
 
-class HomePresentation extends StatelessWidget {
+class HomePresentation extends StatefulWidget {
   const HomePresentation({super.key});
+
+  @override
+  State<HomePresentation> createState() => _HomePresentationState();
+}
+
+class _HomePresentationState extends State<HomePresentation> {
+  final HomeViewmodel vm = inject<HomeViewmodel>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +40,13 @@ class HomePresentation extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              SizedBox(height: 100),
+              ElevatedButton(
+                child: Text('Clique'),
+                onPressed: () async {
+                  await vm.myCards();
+                },
+              ),
               const SizedBox(height: 60),
               const HomeTopBar(),
               Container(
