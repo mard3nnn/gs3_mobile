@@ -8,6 +8,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../data/constants/home_favorites_constants.dart';
 import '../data/mapper/remote/card_list_response.dart';
+import '../data/mapper/remote/transaction_list_response.dart';
 import 'components/history/tile_history.dart';
 import 'components/home_favorites_card.dart';
 
@@ -178,7 +179,27 @@ class _HomePresentationState extends State<HomePresentation> {
                 ),
               ),
               const SizedBox(height: 8),
-              const TileHistory(),
+              StreamBuilder<List<TransactionData>>(
+                stream: vm.transactions,
+                initialData: const [],
+                builder: (context, snapshot) {
+                  if (snapshot.data!.isEmpty) {
+                    return const Text('Nenhuma transação ainda...');
+                  }
+
+                  final List<TransactionData> transactions = snapshot.data!;
+
+                  final List<Widget> tiles = transactions
+                      .map(
+                        (TransactionData transaction) => TileHistory(
+                          transactionData: transaction,
+                        ),
+                      )
+                      .toList();
+
+                  return Column(children: tiles);
+                },
+              ),
             ],
           ),
         ),

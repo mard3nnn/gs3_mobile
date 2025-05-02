@@ -37,6 +37,7 @@ class HomeViewmodel extends BaseViewModel {
   }
 
   Future<void> cardHistory({required String cardId}) async {
+    setCardTransactions([]);
     final AppResponse<List<TransactionData>>? data =
         await _repository.cardHistory(cardId: cardId);
 

@@ -33,12 +33,12 @@ class TransactionData {
   final int transactionType;
   final String title;
   final String description;
-  final double amount;
+  final String amount;
   final int installments;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final String createdAt;
   final int creditCardId;
   final String transactionTypeFormatted;
+  final String dateFormatted;
 
   TransactionData({
     required this.id,
@@ -48,9 +48,9 @@ class TransactionData {
     required this.amount,
     required this.installments,
     required this.createdAt,
-    required this.updatedAt,
     required this.creditCardId,
     required this.transactionTypeFormatted,
+    required this.dateFormatted,
   });
 
   factory TransactionData.fromJson(Map<String, dynamic> json) {
@@ -59,12 +59,12 @@ class TransactionData {
       transactionType: json['transaction_type'],
       title: json['title'],
       description: json['description'],
-      amount: (json['amount'] as num).toDouble(),
+      amount: json['amount_formatted'],
       installments: json['installments'],
-      createdAt: DateTime.parse(json['created_at']),
-      updatedAt: DateTime.parse(json['updated_at']),
+      createdAt: json['created_at_formatted'],
       creditCardId: json['credit_card_id'],
       transactionTypeFormatted: json['transaction_type_formatted'],
+      dateFormatted: json['date_formatted'],
     );
   }
 
@@ -76,10 +76,10 @@ class TransactionData {
       'description': description,
       'amount': amount,
       'installments': installments,
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
+      'created_at': createdAt,
       'credit_card_id': creditCardId,
       'transaction_type_formatted': transactionTypeFormatted,
+      'date_formatted': dateFormatted,
     };
   }
 }

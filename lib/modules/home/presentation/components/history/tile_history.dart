@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:gs3_app/modules/home/data/mapper/remote/transaction_list_response.dart';
 
 import '../../../../../design_system/ds.dart';
 import 'history_icon.dart';
 
 class TileHistory extends StatelessWidget {
-  const TileHistory({super.key});
+  const TileHistory({
+    super.key,
+    required this.transactionData,
+  });
+
+  final TransactionData transactionData;
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +20,10 @@ class TileHistory extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const AppTypography(
-            title: 'Hoje, 05 Set',
+          AppTypography(
+            title: transactionData.dateFormatted,
             fontSize: 12,
-            color: Color.fromRGBO(40, 144, 207, 1),
+            color: const Color.fromRGBO(40, 144, 207, 1),
             fontWeight: FontWeight.bold,
           ),
           const SizedBox(height: 8),
@@ -27,16 +33,16 @@ class TileHistory extends StatelessWidget {
               Expanded(
                 child: Container(
                   margin: const EdgeInsets.only(left: 16),
-                  child: const Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AppTypography(
-                        title: 'Apple',
+                        title: transactionData.title,
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
                       AppTypography(
-                        title: '05/09 às 22:35',
+                        title: transactionData.createdAt,
                         fontSize: 10,
                       ),
                     ],
@@ -45,16 +51,16 @@ class TileHistory extends StatelessWidget {
               ),
               Container(
                 margin: const EdgeInsets.only(right: 16),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     AppTypography(
-                      title: 'R\$ 545,99',
+                      title: transactionData.amount,
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
                     AppTypography(
-                      title: 'em 12x',
+                      title: 'em ${transactionData.installments}x',
                       fontSize: 8,
                     ),
                   ],
