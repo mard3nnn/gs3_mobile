@@ -10,7 +10,7 @@ class LoginServiceImpl implements LoginService {
   final HttpClient _client = inject<HttpClient>();
 
   @override
-  Future<AppResponse<AuthResponse>?> login({
+  Future<AppResponse<AuthResponse?>> login({
     required String email,
     required String password,
   }) async {

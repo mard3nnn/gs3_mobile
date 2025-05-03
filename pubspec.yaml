@@ -46,9 +46,9 @@ dependencies:
   shimmer: 3.0.0
   fluro: 2.0.5
   toastification: 2.3.0
-
   flutter_svg: ^2.1.0
   lucide_icons_flutter: ^3.0.0
+  mocktail: ^1.0.4
 
 dev_dependencies:
   flutter_test:

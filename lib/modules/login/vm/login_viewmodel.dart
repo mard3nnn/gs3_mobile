@@ -24,12 +24,12 @@ class LoginViewModel extends BaseViewModel {
   }) async {
     setLoading(true);
 
-    final AppResponse<AuthResponse>? result = await repository.login(
+    final AppResponse<AuthResponse?> result = await repository.login(
       email: email,
       password: password,
     );
 
-    if (result!.success) {
+    if (result.success) {
       _syncData(
         data: UserAuthData(
           token: result.response!.data.accessToken,
