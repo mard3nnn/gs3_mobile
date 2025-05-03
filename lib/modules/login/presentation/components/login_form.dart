@@ -52,14 +52,14 @@ class _LoginFormState extends State<LoginForm> {
       child: Form(
         key: _formKey,
         autovalidateMode: AutovalidateMode.always,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
             const AppTypography(
               title: 'Seja bem-vindo(a)!',
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
+            const SizedBox(height: 4),
             const AppTypography(
               title: 'Digite sua senha do aplicativo.',
               fontSize: 16,
