@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gs3_app/core/http/models/user_auth_data.dart';
 import 'package:gs3_app/design_system/components/components.dart';
 import 'package:gs3_app/main.dart';
 import 'package:gs3_app/modules/home/presentation/components/home_card.dart';
@@ -152,6 +153,12 @@ class _HomePresentationState extends State<HomePresentation> {
                       final Map<String, dynamic> favorite =
                           HomeFavoritesConstants.favorites[index];
 
+                      if (!_userHasPermission(
+                        cardPermission: favorite['permission'],
+                      )) {
+                        return const SizedBox.shrink();
+                      }
+
                       return Container(
                         margin: const EdgeInsets.only(right: 32),
                         child: HomeFavoritesCard(
@@ -238,5 +245,13 @@ class _HomePresentationState extends State<HomePresentation> {
         ),
       ),
     );
+  }
+
+  bool _userHasPermission({
+    required String cardPermission,
+  }) {
+    final userData = inject<UserAuthData>();
+
+    return userData.permissions.contains(cardPermission);
   }
 }

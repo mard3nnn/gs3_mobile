@@ -26,6 +26,7 @@ class HomeServiceImpl implements HomeService {
     }
   }
 
+  @override
   Future<AppResponse<TransactionListResponse>?> cardHistory({
     required String cardId,
   }) async {
