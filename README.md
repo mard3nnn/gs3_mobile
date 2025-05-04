@@ -22,5 +22,5 @@ Para testar o projeto, siga estas etapas:
 
 Linux, macOS e Windows:
 ```  
-git@github.com:twuiseo/gs3_mobile.git && (cd gs3_app && flutter pub get) 
+git@github.com:mard3nnn/gs3_mobile.git && (cd gs3_app && flutter pub get) 
 ```
