@@ -1,16 +1,26 @@
-# gs3_app
+# Teste técnico GS3 Tecnologia
+Case realizado no processo seletivo. O mesmo contém algumas ferramentas que serão listadas abaixo:
 
-A new Flutter project.
+- Layout
+- Integração com a API
+- Skeleton de components
+- Arquitetura MVVM
+- Gerenciamento de estado com RxDart
+- Gerenciamento de dependências com GetIt
+- Testes unitários
+- Micro design system
 
-## Getting Started
+## 💻 Especificações
 
-This project is a starting point for a Flutter application.
+Antes de começar, verifique se você atendeu aos seguintes requisitos:
+* Você instalou a versão mais recente do `Flutter (3.22.2)`
+* Você instalou a versão mais recente do `Dart (3.4.3)`
 
-A few resources to get you started if this is your first Flutter project:
+## 🚀 Testando o projeto
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Para testar o projeto, siga estas etapas:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Linux, macOS e Windows:
+```  
+git@github.com:twuiseo/gs3_mobile.git && (cd gs3_app && flutter pub get) 
+```
