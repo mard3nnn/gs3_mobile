@@ -25,6 +25,7 @@ class HomePresentation extends StatefulWidget {
 
 class _HomePresentationState extends State<HomePresentation> {
   final HomeViewmodel vm = inject<HomeViewmodel>();
+  final userData = inject<UserAuthData>();
 
   @override
   void initState() {
@@ -109,75 +110,77 @@ class _HomePresentationState extends State<HomePresentation> {
                   );
                 },
               ),
-              Container(
-                height: 1,
-                color: Colors.white.withOpacity(.5),
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 20,
+              if (userData.permissions.isNotEmpty)
+                Container(
+                  height: 1,
+                  color: Colors.white.withOpacity(.5),
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 20,
+                  ),
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 16, right: 16),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    AppTypography(
-                      title: 'Meus favoritos',
-                      fontWeight: FontWeight.bold,
-                    ),
-                    Row(
-                      children: [
-                        AppTypography(
-                          title: 'Personalizar',
-                          fontSize: 8,
-                        ),
-                        Icon(
-                          LucideIcons.layoutGrid,
-                          size: 18,
-                          color: Color.fromRGBO(33, 126, 185, 1.0),
-                        )
-                      ],
-                    )
-                  ],
+              if (userData.permissions.isNotEmpty)
+                Container(
+                  margin: const EdgeInsets.only(left: 16, right: 16),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AppTypography(
+                        title: 'Meus favoritos',
+                        fontWeight: FontWeight.bold,
+                      ),
+                      Row(
+                        children: [
+                          AppTypography(
+                            title: 'Personalizar',
+                            fontSize: 8,
+                          ),
+                          Icon(
+                            LucideIcons.layoutGrid,
+                            size: 18,
+                            color: Color.fromRGBO(33, 126, 185, 1.0),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 16, top: 16),
-                child: SizedBox(
-                  height: 90,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: HomeFavoritesConstants.favorites.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final Map<String, dynamic> favorite =
-                          HomeFavoritesConstants.favorites[index];
+              if (userData.permissions.isNotEmpty)
+                Container(
+                  margin: const EdgeInsets.only(left: 16, top: 16),
+                  child: SizedBox(
+                    height: 90,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: HomeFavoritesConstants.favorites.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final Map<String, dynamic> favorite =
+                            HomeFavoritesConstants.favorites[index];
 
-                      if (!_userHasPermission(
-                        cardPermission: favorite['permission'],
-                      )) {
-                        return const SizedBox.shrink();
-                      }
+                        if (!userData.permissions
+                            .contains(favorite['permission'])) {
+                          return const SizedBox.shrink();
+                        }
 
-                      return Container(
-                        margin: const EdgeInsets.only(right: 32),
-                        child: HomeFavoritesCard(
-                          icon: favorite['icon'],
-                          title: favorite['title'],
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomeFavoritesPresentation(
-                                menu: favorite['title'],
+                        return Container(
+                          margin: const EdgeInsets.only(right: 32),
+                          child: HomeFavoritesCard(
+                            icon: favorite['icon'],
+                            title: favorite['title'],
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomeFavoritesPresentation(
+                                  menu: favorite['title'],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
               const SizedBox(height: 8),
               Container(
                 color: const Color.fromRGBO(229, 229, 229, 1).withOpacity(.4),
@@ -245,13 +248,5 @@ class _HomePresentationState extends State<HomePresentation> {
         ),
       ),
     );
-  }
-
-  bool _userHasPermission({
-    required String cardPermission,
-  }) {
-    final userData = inject<UserAuthData>();
-
-    return userData.permissions.contains(cardPermission);
   }
 }

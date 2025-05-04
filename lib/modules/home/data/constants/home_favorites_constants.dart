@@ -8,7 +8,7 @@ class HomeFavoritesConstants {
     {
       'title': 'Cartão adicional',
       'icon': 'assets/icons/favorites/additional_card.svg',
-      'permission': 'see aditional card'
+      'permission': 'see additional card'
     },
     {
       'title': 'Seguros',
