@@ -27,21 +27,8 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   void initState() {
-    emailController.addListener(() {
-      if (_formKey.currentState!.validate()) {
-        vm.setEnabled(true);
-      } else {
-        vm.setEnabled(false);
-      }
-    });
-
-    passwordController.addListener(() {
-      if (_formKey.currentState!.validate()) {
-        vm.setEnabled(true);
-      } else {
-        vm.setEnabled(false);
-      }
-    });
+    emailController.addListener(_onInputChanged);
+    passwordController.addListener(_onInputChanged);
     super.initState();
   }
 
@@ -51,7 +38,7 @@ class _LoginFormState extends State<LoginForm> {
       padding: const EdgeInsets.all(16),
       child: Form(
         key: _formKey,
-        autovalidateMode: AutovalidateMode.always,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: ListView(
           children: [
             const AppTypography(
@@ -161,5 +148,12 @@ class _LoginFormState extends State<LoginForm> {
         ),
       ),
     );
+  }
+
+  void _onInputChanged() {
+    final bool isFilled =
+        emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
+    vm.setEnabled(
+        isFilled); // habilita botão só se os dois estiverem preenchidos
   }
 }
